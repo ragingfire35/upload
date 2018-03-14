@@ -49,14 +49,16 @@ void Node::UploadImage() {
 	QList<QString>::iterator it = mImagList.begin();
 	//for (; it != mImagList.end(); it++) {
 		QString fulldir = *it;
+		mImagList.pop_front();
+
 		Http* http = new Http();
 		http->Upload(this, mParent,TYPE_IMAGE, urlimage, fulldir, fulldir);
-		mImagList.pop_front();
+		
 	//}
 }
 
 QString Node::HttpSuccessCallBack(int type, QString rdir,QString result,int id,QString name) {
-	UploadAll();
+	
 	if (TYPE_MUSIC == type) {//music
 		struct FileId fid;
 		fid.fileName = name;
@@ -85,6 +87,7 @@ QString Node::HttpSuccessCallBack(int type, QString rdir,QString result,int id,Q
 		//	Uploadjson();
 		//}
 	}
+	UploadAll();
 	return "";
 }
 

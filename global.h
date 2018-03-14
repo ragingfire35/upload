@@ -34,7 +34,7 @@ struct FileId {
 
 static void WriteLog(QString filename,QString str) {	
 	QFile file(filename);
-	if (!file.open(QIODevice::ReadWrite | QIODevice::Text)){
+	if (!file.open(QIODevice::ReadWrite | QIODevice::Text | QIODevice::Append)){
 		QMessageBox::warning(NULL, "file write", "can't open", QMessageBox::Yes);		
 	}
 	QTextStream in(&file);
