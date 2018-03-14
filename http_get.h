@@ -18,6 +18,7 @@ public slots:
 	void replyFinished(QNetworkReply*reply);
 	void OnUploadProgress(qint64 bytesSent, qint64 bytesTotal);
 private:
+	QString mName;
 	qint64 fileRealSize;
 	qint64 sendtotalsize;
 	qint64 totalsize;

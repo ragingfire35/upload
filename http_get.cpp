@@ -31,6 +31,7 @@ void Http::Upload(QObject* parent,QObject* mainParent, int type, QString strurl,
 	
 	QFileInfo flinfo(fulldir);
 	QString name = flinfo.fileName();
+	mName = name;
 	//QString tmp = fulldir.replace("/","\\");
 	QFileInfo fn(fulldir);
 	if (!fn.exists()) {
@@ -173,7 +174,8 @@ void Http::replyFinished(QNetworkReply *reply) {
 			Q_ARG(int,mType),
 			Q_ARG(QString,mrdir),
 			Q_ARG(QString,result),
-			Q_ARG(int,id)
+			Q_ARG(int,id),
+			Q_ARG(QString, mName)			
 			);
 	}
 	else

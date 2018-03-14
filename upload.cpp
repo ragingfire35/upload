@@ -61,12 +61,13 @@ void upload::OnUploadButtonClick() {
 	}
 	onepid = idstr.toInt();	
 	RecuseDir(mRoodir, NULL, "");	
-	InitProgress(need_download_size + 1 * 1024 * 1024);
+	mProgressTotalSize = need_download_size + 1 * 1024 * 1024;
+	InitProgress(mProgressTotalSize);
 	Upload();
 }
 void upload::InitCom() {
 	//for test.
-	ui.selectdir_lineEdit->setText("D:\\work\\techAngel\\upan\\哈农练指法");
+	ui.selectdir_lineEdit->setText("F:\\upload\\哈农练指法");
 	ui.onepid_lineEdit->setText("263");
 
 	connect(ui.upload_pushButton, SIGNAL(clicked()), this, SLOT( OnUploadButtonClick()) );
@@ -135,6 +136,7 @@ QString upload::UploadSuccesCallBack(QString param) {
 }
 void upload::Upload() {
 	if (0 == mNodeList.size() ) {
+		ui.upload_progressBar->setValue(mProgressTotalSize);
 		QMessageBox::information(NULL,"结果","全部上传成功。", QMessageBox::Yes | QMessageBox::No);
 		return;
 	}

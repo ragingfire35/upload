@@ -55,10 +55,13 @@ void Node::UploadImage() {
 	//}
 }
 
-QString Node::HttpSuccessCallBack(int type, QString rdir,QString result,int id) {
+QString Node::HttpSuccessCallBack(int type, QString rdir,QString result,int id,QString name) {
 	UploadAll();
 	if (TYPE_MUSIC == type) {//music
-		mFileIdLst.append(id);
+		struct FileId fid;
+		fid.fileName = name;
+		fid.id = id;
+		mFileIdLst.append(fid);
 		//int index = mMusicList.indexOf(rdir);
 		//if (-1 != index) {
 		//	mMusicList.removeOne(rdir);
@@ -99,21 +102,28 @@ QString Node::HttpSuccessCallBackJs(QString result) {
 QString Node::GetUploadjson() {
 
 	QJsonArray file;
-	QString fileStr;
+	//QString fileStr;
 	int i = 0;
-	QList<int>::iterator fileIt = mFileIdLst.begin();
-	for (;fileIt!=mFileIdLst.end(); fileIt++) {
-		int id = *fileIt;
-		QJsonValue value(id);
-		file.push_back(value);
-		if (0 == i) {
-			fileStr = QString::number(id);
-			i++;
-		}
-		else {
-			fileStr = fileStr + "," + QString::number(id);
-			i++;
-		}
+	QList<struct FileId>::iterator fileIt = mFileIdLst.begin();
+		
+	for (int i = 0;fileIt!=mFileIdLst.end(); fileIt++,i++) {
+		struct FileId fid = *fileIt;
+		int id = fid.id;
+		//QJsonValue value(id);
+		QJsonObject obj;
+		obj.insert("title",fid.fileName);
+		obj.insert("file", fid.id);
+		obj.insert("remark", "aa");
+		obj.insert("sort",i);
+		file.push_back(obj);
+		//if (0 == i) {
+		//	fileStr = QString::number(id);
+		//	i++;
+		//}
+		//else {
+		//	fileStr = fileStr + "," + QString::number(id);
+		//	i++;
+		//}
 	}
 
 	QJsonArray image;
@@ -141,7 +151,7 @@ QString Node::GetUploadjson() {
 	json.insert("title", this->title);
 	//json.insert("parent_id", this->parent_id);
 	//json.insert("file", QJsonValue(file));
-	json.insert("file", fileStr);
+	json.insert("three_level", file);
 	json.insert("sf_status", this->sf_status);
 	json.insert("price", this->price);
 	json.insert("remark", this->remark);
@@ -154,6 +164,7 @@ QString Node::GetUploadjson() {
 	QByteArray byte_array = document.toJson(QJsonDocument::Compact);
 	QString json_str(byte_array);
 
+	WriteLog("1.txt", json_str);
 	return json_str;
 }
 

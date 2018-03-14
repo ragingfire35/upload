@@ -27,6 +27,7 @@ public slots:
 private:
 	Ui::uploadClass ui;
 private:
+	qint64 mProgressTotalSize;
 	qint64 onepid;
 	QString mRoodir;
 	QList<Node*> mNodeList;

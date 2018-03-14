@@ -18,14 +18,14 @@ private:
 	//void DealResult(QString result,int type);
 	QString GetUploadjson();
 public slots:
-	QString HttpSuccessCallBack(int type, QString rdir, QString result, int id);
+	QString HttpSuccessCallBack(int type, QString rdir, QString result, int id, QString name);
 	QString HttpSuccessCallBackJs( QString result);
 private:
 	QString mRoodir;
 public:
 	QString title;
 	QObject* mParent;
-	QList<int> mFileIdLst;
+	QList<struct FileId> mFileIdLst;
 	QList<int> mImageIdLst;
 	bool invokeUpjs;	
 	QList<QString> mMusicList;
