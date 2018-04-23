@@ -114,10 +114,32 @@ QString Node::GetUploadjson() {
 		int id = fid.id;
 		//QJsonValue value(id);
 		QJsonObject obj;
-		obj.insert("title",fid.fileName);
+		
+		//get showname
+		QString showName;
+		int sort = 0;
+		int pos1 = fid.fileName.indexOf("-");
+		int pos2 = fid.fileName.indexOf(".");
+		if ( -1 != pos1 && -1 != pos2 ) {
+			showName = fid.fileName.mid(pos1+1,pos2-pos1-1);
+			QString strsort = fid.fileName.left(pos1);
+			if ( IsDigitStr(strsort) ) {
+				sort = strsort.toInt();
+			}
+			else {
+				sort = i;
+			}
+		}
+		else {
+			showName = fid.fileName;
+			sort = i;
+		}
+		
+		//end showname		
+		obj.insert("title",showName);
 		obj.insert("file", fid.id);
 		obj.insert("remark", "aa");
-		obj.insert("sort",i);
+		obj.insert("sort",sort);
 		file.push_back(obj);
 		//if (0 == i) {
 		//	fileStr = QString::number(id);
