@@ -16,7 +16,7 @@ const QString urlimage = domain + "/Home/Interface/uploadPicture";
 //const QString urltest = domain + "/index.php/Home/Index/uploadPicture.html";
 
 const QString urljson = domain + "/Home/Interface/batch_add";
-const QString expire = "20180601";
+const QString expire = "20181001";
 
 enum 
 {
